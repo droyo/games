@@ -1,0 +1,45 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "pixelgl",
+    srcs = [
+        "pixelgl/canvas.go",
+        "pixelgl/doc.go",
+        "pixelgl/glframe.go",
+        "pixelgl/glpicture.go",
+        "pixelgl/gltriangles.go",
+        "pixelgl/input.go",
+        "pixelgl/monitor.go",
+        "pixelgl/run.go",
+        "pixelgl/util.go",
+        "pixelgl/window.go",
+    ],
+    importpath = "github.com/faiface/pixel/pixelgl",
+    visibility = ["//visibility:public"],
+    deps = [
+    	":pixel",
+        "@com_github_faiface_glhf//:go_default_library",
+        "@com_github_faiface_mainthread//:go_default_library",
+        "@com_github_go_gl_glfw//:go_default_library",
+        "@com_github_go_gl_mathgl//mgl32:go_default_library",
+        "@com_github_pkg_errors//:go_default_library",
+    ],
+)
+
+go_library(
+    name = "pixel",
+    srcs = [
+        "batch.go",
+        "color.go",
+        "compose.go",
+        "data.go",
+        "doc.go",
+        "drawer.go",
+        "geometry.go",
+        "interface.go",
+        "sprite.go",
+    ],
+    importpath = "github.com/faiface/pixel",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_go_gl_mathgl//mgl64:go_default_library"],
+)

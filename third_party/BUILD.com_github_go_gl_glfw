@@ -1,0 +1,100 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "build.go",
+        "context.go",
+        "error.c",
+        "error.go",
+        "glfw.go",
+        "input.c",
+        "input.go",
+        "monitor.c",
+        "monitor.go",
+        "time.go",
+        "util.go",
+        "vulkan.go",
+        "window.c",
+        "window.go",
+        "glfw/src/context.c",
+        "glfw/src/init.c",
+        "glfw/src/input.c",
+        "glfw/src/monitor.c",
+        "glfw/src/vulkan.c",
+        "glfw/src/window.c",
+    ] + glob([
+        "glfw/**/*.h",
+    ]) + select({
+        "@io_bazel_rules_go//go/platform:darwin_amd64": [
+            #"c_glfw_darwin.go",
+            "native_darwin.go",
+			"glfw/src/cocoa_init.m",
+			"glfw/src/cocoa_joystick.m",
+			"glfw/src/cocoa_monitor.m",
+			"glfw/src/cocoa_window.m",
+			"glfw/src/cocoa_time.c",
+			"glfw/src/posix_tls.c",
+			"glfw/src/nsgl_context.m",
+        ],
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            #"c_glfw_linbsd.go",
+            "native_linbsd.go",
+			"glfw/src/linux_joystick.c",
+			"glfw/src/posix_time.c",
+			"glfw/src/posix_tls.c",
+			"glfw/src/xkb_unicode.c",
+			"glfw/src/egl_context.c",
+            # There's support for MIR + Wayland, we're choosing x11.
+            # Should add another select here to switch between them.
+			"glfw/src/x11_init.c",
+			"glfw/src/x11_monitor.c",
+			"glfw/src/x11_window.c",
+			"glfw/src/glx_context.c",
+        ],
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            #"c_glfw_windows.go",
+            "native_windows.go",
+			"glfw/src/win32_init.c",
+			"glfw/src/win32_joystick.c",
+			"glfw/src/win32_monitor.c",
+			"glfw/src/win32_time.c",
+			"glfw/src/win32_tls.c",
+			"glfw/src/win32_window.c",
+			"glfw/src/wgl_context.c",
+			"glfw/src/egl_context.c",
+        ],
+        "//conditions:default": [],
+    }),
+    cgo = True,
+    clinkopts = select({
+        "@io_bazel_rules_go//go/platform:darwin_amd64": [
+            "-framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo",
+        ],
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "-lGL -lX11 -lXrandr -lXxf86vm -lXi -lXcursor -lm -lXinerama -ldl -lrt",
+        ],
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            "-lopengl32 -lgdi32",
+        ],
+        "//conditions:default": [],
+    }),
+    copts = select({
+        "@io_bazel_rules_go//go/platform:darwin_amd64": [
+            "-D_GLFW_COCOA -D_GLFW_USE_CHDIR -D_GLFW_USE_MENUBAR -D_GLFW_USE_RETINA -Wno-deprecated-declarations",
+            "-x objective-c",
+        ],
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "-D_GLFW_X11",
+        ],
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            "-D_GLFW_WIN32 -Iglfw/deps/mingw",
+        ],
+        "//conditions:default": [],
+    }) + [
+    	"-Iexternal/com_github_go_gl_glfw/glfw/src",
+    	"-Iexternal/com_github_go_gl_glfw/glfw/include",
+    ],
+    importpath = "github.com/go-gl/glfw/v3.2/glfw",
+    visibility = ["//visibility:public"],
+)
