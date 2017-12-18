@@ -1,0 +1,444 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "math_fixed",
+    srcs = ["math/fixed.go"],
+    importpath = "golang.org/x/image/math/fixed",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "math_fixed_test",
+    srcs = ["math/fixed_test.go"],
+    embed = [":math_fixed"],
+    importpath = "golang.org/x/image/math/fixed",
+)
+
+go_library(
+    name = "math_f64",
+    srcs = ["math/f64/f64.go"],
+    importpath = "golang.org/x/image/math/f64",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "math_f32",
+    srcs = ["math/f32/f32.go"],
+    importpath = "golang.org/x/image/math/f32",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "tiff",
+    srcs = [
+        "tiff/buffer.go",
+        "tiff/compress.go",
+        "tiff/consts.go",
+        "tiff/reader.go",
+        "tiff/writer.go",
+    ],
+    importpath = "golang.org/x/image/tiff",
+    visibility = ["//visibility:public"],
+    deps = [":tiff_lzw"],
+)
+
+go_test(
+    name = "tiff_test",
+    srcs = [
+        "tiff/buffer_test.go",
+        "tiff/reader_test.go",
+        "tiff/writer_test.go",
+    ],
+    embed = [":tiff"],
+    importpath = "golang.org/x/image/tiff",
+)
+
+go_library(
+    name = "tiff_lzw",
+    srcs = ["tiff/lzw/reader.go"],
+    importpath = "golang.org/x/image/tiff/lzw",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "colornames",
+    srcs = [
+        "colornames/colornames.go",
+        "colornames/table.go",
+    ],
+    importpath = "golang.org/x/image/colornames",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "colornames_test",
+    srcs = ["colornames/colornames_test.go"],
+    embed = [":colornames"],
+    importpath = "golang.org/x/image/colornames",
+)
+
+go_library(
+    name = "font_inconsolata",
+    srcs = [
+        "font/inconsolata/bold8x16.go",
+        "font/inconsolata/inconsolata.go",
+        "font/inconsolata/regular8x16.go",
+    ],
+    importpath = "golang.org/x/image/font/inconsolata",
+    visibility = ["//visibility:public"],
+    deps = [":font_basicfont"],
+)
+
+go_library(
+    name = "font_plan9font",
+    srcs = ["font/plan9font/plan9font.go"],
+    importpath = "golang.org/x/image/font/plan9font",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":font",
+        ":math_fixed",
+    ],
+)
+
+go_test(
+    name = "font_plan9font_test",
+    srcs = ["font/plan9font/plan9font_test.go"],
+    embed = [":font_plan9font"],
+    importpath = "golang.org/x/image/font/plan9font",
+)
+
+go_test(
+    name = "font_plan9font_xtest",
+    srcs = ["font/plan9font/example_test.go"],
+    importpath = "golang.org/x/image/font/plan9font_test",
+    deps = [
+        ":font_plan9font",
+        ":font",
+        ":math_fixed",
+    ],
+)
+
+go_library(
+    name = "font",
+    srcs = ["font/font.go"],
+    importpath = "golang.org/x/image/font",
+    visibility = ["//visibility:public"],
+    deps = [":math_fixed"],
+)
+
+go_test(
+    name = "font_test",
+    srcs = ["font/font_test.go"],
+    data = glob(["font/testdata/**"]),
+    embed = [":font"],
+    importpath = "golang.org/x/image/font",
+    deps = [":math_fixed"],
+)
+
+go_library(
+    name = "font_gofont_gomedium",
+    srcs = ["font/gofont/gomedium/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gomedium",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gosmallcaps",
+    srcs = ["font/gofont/gosmallcaps/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gosmallcaps",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_goregular",
+    srcs = ["font/gofont/goregular/data.go"],
+    importpath = "golang.org/x/image/font/gofont/goregular",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gomono",
+    srcs = ["font/gofont/gomono/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gomono",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_goitalic",
+    srcs = ["font/gofont/goitalic/data.go"],
+    importpath = "golang.org/x/image/font/gofont/goitalic",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gobold",
+    srcs = ["font/gofont/gobold/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gobold",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gosmallcapsitalic",
+    srcs = ["font/gofont/gosmallcapsitalic/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gosmallcapsitalic",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gomediumitalic",
+    srcs = ["font/gofont/gomediumitalic/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gomediumitalic",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gomonoitalic",
+    srcs = ["font/gofont/gomonoitalic/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gomonoitalic",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gomonobolditalic",
+    srcs = ["font/gofont/gomonobolditalic/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gomonobolditalic",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gobolditalic",
+    srcs = ["font/gofont/gobolditalic/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gobolditalic",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_gofont_gomonobold",
+    srcs = ["font/gofont/gomonobold/data.go"],
+    importpath = "golang.org/x/image/font/gofont/gomonobold",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "font_sfnt",
+    srcs = [
+        "font/sfnt/cmap.go",
+        "font/sfnt/data.go",
+        "font/sfnt/postscript.go",
+        "font/sfnt/sfnt.go",
+        "font/sfnt/truetype.go",
+    ],
+    importpath = "golang.org/x/image/font/sfnt",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":font",
+        ":math_fixed",
+        "@org_golang_x_text//encoding/charmap:go_default_library",
+    ],
+)
+
+go_test(
+    name = "font_sfnt_test",
+    srcs = [
+        "font/sfnt/proprietary_test.go",
+        "font/sfnt/sfnt_test.go",
+    ],
+    embed = [":font_sfnt"],
+    importpath = "golang.org/x/image/font/sfnt",
+    deps = [
+        ":font",
+        ":font_gofont_gobold",
+        ":font_gofont_gomono",
+        ":font_gofont_goregular",
+        ":math_fixed",
+    ],
+)
+
+go_test(
+    name = "font_sfnt_xtest",
+    srcs = ["font/sfnt/example_test.go"],
+    importpath = "golang.org/x/image/font/sfnt_test",
+    deps = [
+        ":font_sfnt",
+        ":font_gofont_goregular",
+        ":math_fixed",
+        ":vector",
+    ],
+)
+
+go_library(
+    name = "basicfont",
+    srcs = [
+        "font/basicfont/basicfont.go",
+        "font/basicfont/data.go",
+    ],
+    importpath = "golang.org/x/image/font/basicfont",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":font",
+        ":math_fixed",
+    ],
+)
+
+go_library(
+    name = "vp8",
+    srcs = [
+        "vp8/decode.go",
+        "vp8/filter.go",
+        "vp8/idct.go",
+        "vp8/partition.go",
+        "vp8/pred.go",
+        "vp8/predfunc.go",
+        "vp8/quant.go",
+        "vp8/reconstruct.go",
+        "vp8/token.go",
+    ],
+    importpath = "golang.org/x/image/vp8",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "bmp",
+    srcs = [
+        "bmp/reader.go",
+        "bmp/writer.go",
+    ],
+    importpath = "golang.org/x/image/bmp",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "bmp_test",
+    srcs = [
+        "bmp/reader_test.go",
+        "bmp/writer_test.go",
+    ],
+    embed = [":bmp"],
+    importpath = "golang.org/x/image/bmp",
+)
+
+go_library(
+    name = "riff",
+    srcs = ["riff/riff.go"],
+    importpath = "golang.org/x/image/riff",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "riff_test",
+    srcs = ["riff/riff_test.go"],
+    embed = [":riff"],
+    importpath = "golang.org/x/image/riff",
+)
+
+go_test(
+    name = "riff_xtest",
+    srcs = ["riff/example_test.go"],
+    importpath = "golang.org/x/image/riff_test",
+    deps = [":riff"],
+)
+
+go_library(
+    name = "vector",
+    srcs = [
+        "vector/raster_fixed.go",
+        "vector/raster_floating.go",
+        "vector/vector.go",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:amd64": [
+            "vector/acc_amd64.go",
+            "vector/acc_amd64.s",
+            "vector/acc_other.go",
+        ],
+        "//conditions:default": [
+            "vector/acc_other.go",
+        ],
+    }),
+    importpath = "golang.org/x/image/vector",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "vector_test",
+    srcs = [
+        "vector/acc_test.go",
+        "vector/vector_test.go",
+    ],
+    embed = [":vector"],
+    importpath = "golang.org/x/image/vector",
+)
+
+go_library(
+    name = "vp8l",
+    srcs = [
+        "vp8l/decode.go",
+        "vp8l/huffman.go",
+        "vp8l/transform.go",
+    ],
+    importpath = "golang.org/x/image/vp8l",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "draw",
+    srcs = [
+        "draw/draw.go",
+        "draw/go1_8.go",
+        "draw/go1_9.go",
+        "draw/impl.go",
+        "draw/scale.go",
+    ],
+    importpath = "golang.org/x/image/draw",
+    visibility = ["//visibility:public"],
+    deps = [":math_f64"],
+)
+
+go_test(
+    name = "draw_test",
+    srcs = [
+        "draw/scale_test.go",
+        "draw/stdlib_test.go",
+    ],
+    embed = [":draw"],
+    importpath = "golang.org/x/image/draw",
+    deps = [":math_f64"],
+)
+
+go_test(
+    name = "draw_xtest",
+    srcs = ["draw/example_test.go"],
+    importpath = "golang.org/x/image/draw_test",
+    deps = [
+        ":draw",
+        ":math_f64",
+    ],
+)
+
+go_library(
+    name = "webp",
+    srcs = [
+        "webp/decode.go",
+        "webp/webp.go",
+    ],
+    importpath = "golang.org/x/image/webp",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":riff",
+        ":vp8",
+        ":vp8l",
+    ],
+)
+
+go_test(
+    name = "webp_test",
+    srcs = ["webp/decode_test.go"],
+    embed = [":webp"],
+    importpath = "golang.org/x/image/webp",
+)
+
+go_library(
+    name = "nycbcra",
+    srcs = ["webp/nycbcra/nycbcra.go"],
+    importpath = "golang.org/x/image/webp/nycbcra",
+    visibility = ["//visibility:public"],
+)

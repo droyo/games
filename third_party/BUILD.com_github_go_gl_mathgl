@@ -1,0 +1,117 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "matstack",
+    srcs = [
+        "mgl64/matstack/matstack.go",
+        "mgl64/matstack/transformStack.go",
+    ],
+    importpath = "github.com/go-gl/mathgl/mgl64/matstack",
+    visibility = ["//visibility:public"],
+    deps = [":mgl64"],
+)
+
+go_test(
+    name = "mgl64_matstack_test",
+    srcs = ["mgl64/matstack/transformstack_test.go"],
+    embed = [":mgl64_matstack"],
+    importpath = "github.com/go-gl/mathgl/mgl64/matstack",
+    deps = [":mgl64"],
+)
+
+go_library(
+    name = "mgl64",
+    srcs = [
+        "mgl64/conv.go",
+        "mgl64/doc.go",
+        "mgl64/matmn.go",
+        "mgl64/matrix.go",
+        "mgl64/mempool.go",
+        "mgl64/project.go",
+        "mgl64/quat.go",
+        "mgl64/shapes.go",
+        "mgl64/transform.go",
+        "mgl64/util.go",
+        "mgl64/vecn.go",
+        "mgl64/vector.go",
+    ],
+    importpath = "github.com/go-gl/mathgl/mgl64",
+    visibility = ["//visibility:public"],
+    deps = ["@org_golang_x_image//:math_f64"],
+)
+
+go_test(
+    name = "mgl64_test",
+    srcs = [
+        "mgl64/conv_test.go",
+        "mgl64/mat_test.go",
+        "mgl64/matmn_test.go",
+        "mgl64/mempool_test.go",
+        "mgl64/project_test.go",
+        "mgl64/quat_test.go",
+        "mgl64/transform_test.go",
+        "mgl64/util_test.go",
+        "mgl64/vec_test.go",
+        "mgl64/vecn_test.go",
+    ],
+    embed = [":mgl64"],
+    importpath = "github.com/go-gl/mathgl/mgl64",
+)
+
+go_library(
+    name = "mgl32_matstack",
+    srcs = [
+        "mgl32/matstack/matstack.go",
+        "mgl32/matstack/transformStack.go",
+    ],
+    importpath = "github.com/go-gl/mathgl/mgl32/matstack",
+    visibility = ["//visibility:public"],
+    deps = ["//mgl32:go_default_library"],
+)
+
+go_test(
+    name = "mgl32_matstack_test",
+    srcs = ["mgl32/matstack/transformstack_test.go"],
+    embed = [":mgl32_matstack"],
+    importpath = "github.com/go-gl/mathgl/mgl32/matstack",
+    deps = [":mgl32"],
+)
+
+go_library(
+    name = "mgl32",
+    srcs = [
+        "mgl32/conv.go",
+        "mgl32/doc.go",
+        "mgl32/matmn.go",
+        "mgl32/matrix.go",
+        "mgl32/mempool.go",
+        "mgl32/project.go",
+        "mgl32/quat.go",
+        "mgl32/shapes.go",
+        "mgl32/transform.go",
+        "mgl32/util.go",
+        "mgl32/vecn.go",
+        "mgl32/vector.go",
+    ],
+    importpath = "github.com/go-gl/mathgl/mgl32",
+    visibility = ["//visibility:public"],
+    deps = ["@org_golang_x_image//:math_f32"],
+)
+
+go_test(
+    name = "mgl32_test",
+    srcs = [
+        "mgl32/conv_test.go",
+        "mgl32/mat_test.go",
+        "mgl32/matmn_test.go",
+        "mgl32/mempool_test.go",
+        "mgl32/project_test.go",
+        "mgl32/quat_test.go",
+        "mgl32/transform_test.go",
+        "mgl32/util_test.go",
+        "mgl32/vec_test.go",
+        "mgl32/vecn_test.go",
+    ],
+    embed = [":mgl32"],
+    importpath = "github.com/go-gl/mathgl/mgl32",
+)

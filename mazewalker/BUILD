@@ -23,6 +23,6 @@ go_binary(
     deps = [
         "@com_github_faiface_pixel//:pixel",
         "@com_github_faiface_pixel//:pixelgl",
-        "@org_golang_x_image//colornames:go_default_library",
+        "@org_golang_x_image//:colornames",
     ],
 )

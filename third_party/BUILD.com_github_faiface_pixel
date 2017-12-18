@@ -21,7 +21,7 @@ go_library(
         "@com_github_faiface_glhf//:go_default_library",
         "@com_github_faiface_mainthread//:go_default_library",
         "@com_github_go_gl_glfw//:go_default_library",
-        "@com_github_go_gl_mathgl//mgl32:go_default_library",
+        "@com_github_go_gl_mathgl//:mgl32",
         "@com_github_pkg_errors//:go_default_library",
     ],
 )
@@ -41,5 +41,5 @@ go_library(
     ],
     importpath = "github.com/faiface/pixel",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_go_gl_mathgl//mgl64:go_default_library"],
+    deps = ["@com_github_go_gl_mathgl//:mgl64"],
 )

@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "attr.go",
+        "doc.go",
+        "frame.go",
+        "interface.go",
+        "orphan.go",
+        "shader.go",
+        "texture.go",
+        "util.go",
+        "vertex.go",
+    ],
+    importpath = "github.com/faiface/glhf",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_faiface_mainthread//:go_default_library",
+        "@com_github_go_gl_gl//v3.3-core/gl:go_default_library",
+        "@com_github_go_gl_mathgl//:mgl32",
+        "@com_github_pkg_errors//:go_default_library",
+    ],
+)
